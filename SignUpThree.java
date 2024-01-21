@@ -169,8 +169,8 @@ public void actionPerformed(ActionEvent ae){
         }
         
         Random  random = new Random();
-        String cardnumber =""+ Math.abs((random.nextLong()% 90000000L))+5040936000000000L;
-        String pinnumber =""+ Math.abs((random.nextLong()% 9000L))+1000L;
+        String cardnumber =""+ Math.abs((random.nextLong()% 90000000L)+5040936000000000L);
+        String pinnumber =""+ Math.abs((random.nextLong()% 9000L)+1000L);
         
         String facility ="";
         if(c1.isSelected()){
@@ -199,7 +199,13 @@ public void actionPerformed(ActionEvent ae){
              else {
                   Conn c= new Conn();
                String query1 ="insert into signupthree values('"+formno+"','"+accountType+"','"+cardnumber+"','"+pinnumber+"','"+facility+"')";
-                   c.s.executeUpdate(query1);
+               String query2 ="insert into login values('"+formno+"','"+cardnumber+"','"+pinnumber+"')";
+
+               
+               c.s.executeUpdate(query1);
+               c.s.executeUpdate(query2);
+          JOptionPane.showMessageDialog(null, "Card Number "+ cardnumber+"\n Pin"+ pinnumber);
+
              }
            
         }

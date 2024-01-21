@@ -4,6 +4,7 @@ package bankmanagementsystem;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
 public class Login extends JFrame implements ActionListener{
     
    // we will define them gloabally so we can use it outsode the constructor
@@ -22,7 +23,7 @@ public class Login extends JFrame implements ActionListener{
         //We can't pass Image from Jlabel so  we need to convert it into the  ImageIcon
         ImageIcon i3 = new ImageIcon(i2);
         
-        //we can't directly put image icon on frame that's why we have passed it's variable from jlabel
+        //we can't directly put imageicon on frame that's why we have passed it's variable from jlabel
         JLabel label =new JLabel(i3);
         
         label.setBounds(70,10,100,100);
@@ -97,8 +98,22 @@ public class Login extends JFrame implements ActionListener{
             
         }
         else if(ae.getSource()==login){
-            
-            
+            Conn c = new Conn();
+            String cardnumber = cardTextField.getText();
+            String pinnumber = PinTextField.getText();
+            String query = "select * from login where cardnumber= '"+cardnumber+"' and pin = '"+pinnumber+"'";
+            try{
+                ResultSet rs =c.s.executeQuery(query);
+                if(rs.next()){
+                    setVisible(false);
+                    new Transaction(pinnumber).setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Incorrect Card Number or Pin");
+                
+            }} catch(Exception e){
+                System.out.println(e);
+            }
         }
         else if(ae.getSource()==signup){
             setVisible(false);
